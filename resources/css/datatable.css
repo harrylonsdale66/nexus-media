@@ -1,0 +1,31 @@
+.dt-length, .dt-info, .dt-paging {
+    padding: 10px;
+}
+
+.dt-length select {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--p-color-border);
+    border-radius: 5px;
+}
+
+.dt-paging nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.dt-paging button {
+    border: none;
+    background: var(--p-color-border);
+    padding: 5px 15px;
+    border-radius: 8px;
+    transition: background-color .3s;
+}
+
+.dt-paging button.current, .dt-paging button:hover {
+    background: var(--p-color-bg-primary, #303030);
+    color: #fff;
+}
