@@ -49,6 +49,16 @@ class ImportService
                     'fulfillment_status' => $order['fulfillment_status'],
                     'total_price' => $order['total_price'],
                 ]);
+                if(isset($order['customer'])) {
+                    Customer::firstOrCreate([
+                        'external_id' => $order['customer']['id'],
+                    ],[
+                        'external_id' => $order['customer']['id'] ?? null,
+                        'first_name' => $order['customer']['first_name'] ?? null,
+                        'last_name' => $order['customer']['last_name'] ?? null,
+                        'email' => $order['customer']['email'] ?? null,
+                    ]);
+                }
             }
         }
     }
