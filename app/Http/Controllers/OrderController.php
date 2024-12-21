@@ -21,7 +21,7 @@ class OrderController extends Controller
      */
     public function index(): JsonResponse
     {
-        $orders = Order::with('customer')->get();
+        $orders = Order::with('customer')->where('total_price', '>', 100)->get();
         return response()->json([
             'recordsTotal' => $orders->count(),
             'recordsFiltered' => $orders->count(),
