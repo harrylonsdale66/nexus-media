@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ImportService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 
 class ImportController extends Controller
 {
@@ -18,9 +19,9 @@ class ImportController extends Controller
      */
     public function index(): RedirectResponse
     {
-        $this->importService->importCustomers();
-        $this->importService->importOrders();
-        // обработку ошибок сделать не успел
-        return redirect()->route('index')->with('success', 'Import done!');
+        Cache::forget('orders');
+        $customersCount = $this->importService->importCustomers();
+        $ordersCount = $this->importService->importOrders();
+        return redirect()->route('index')->with('success', "Imported $customersCount customers and $ordersCount orders.");
     }
 }

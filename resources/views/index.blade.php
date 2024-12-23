@@ -4,7 +4,6 @@
 @section('content')
 
 <div class="container-fluid">
-
     <div class="page-layout-header">
         <h1 class="page-layout-title">Orders page</h1>
     </div>
@@ -14,9 +13,9 @@
                 <div class="card-heading align-items-center">
                     <h2 class="card-title mb-0">To update data, click the button "Import"</h2>
                     @if(Session::has('success'))
-                        <span class="badge badge-success">{{ Session::get('success') }}</span>
+                        <span class="badge badge-success mb-0">{{ Session::get('success') }}</span>
                     @else
-                        <a href="{{ route('import') }}" class="btn btn-primary">Import</a>
+                        <a href="{{ route('import') }}" class="btn btn-primary mb-0">Import</a>
                     @endif
                 </div>
             </div>

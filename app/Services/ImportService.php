@@ -15,14 +15,14 @@ class ImportService
     }
 
     /**
-     * @return void
+     * @return int
      */
-    public function importCustomers(): void
+    public function importCustomers(): int
     {
-        $data = $this->shopifyService->getCustomers();
-        if(isset($data['customers']) && count($data['customers'])) {
+        $customers = $this->shopifyService->getCustomers();
+        if(count($customers)) {
             Customer::truncate();
-            foreach ($data['customers'] as $customer) {
+            foreach ($customers as $customer) {
                 Customer::create([
                     'external_id' => $customer['id'] ?? null,
                     'first_name' => $customer['first_name'],
@@ -31,17 +31,18 @@ class ImportService
                 ]);
             }
         }
+        return count($customers);
     }
 
     /**
-     * @return void
+     * @return int
      */
-    public function importOrders(): void
+    public function importOrders(): int
     {
-        $data = $this->shopifyService->getOrders();
-        if(isset($data['orders']) && count($data['orders'])) {
+        $orders = $this->shopifyService->getOrders();
+        if(count($orders)) {
             Order::truncate();
-            foreach ($data['orders'] as $order) {
+            foreach ($orders as $order) {
                 Order::create([
                     'external_id' => $order['id'],
                     'customer_id' => $order['customer']['id'] ?? null,
@@ -49,17 +50,8 @@ class ImportService
                     'fulfillment_status' => $order['fulfillment_status'],
                     'total_price' => $order['total_price'],
                 ]);
-                if(isset($order['customer'])) {
-                    Customer::firstOrCreate([
-                        'external_id' => $order['customer']['id'],
-                    ],[
-                        'external_id' => $order['customer']['id'] ?? null,
-                        'first_name' => $order['customer']['first_name'] ?? null,
-                        'last_name' => $order['customer']['last_name'] ?? null,
-                        'email' => $order['customer']['email'] ?? null,
-                    ]);
-                }
             }
         }
+        return count($orders);
     }
 }

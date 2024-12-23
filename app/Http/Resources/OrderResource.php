@@ -15,7 +15,10 @@ class OrderResource extends JsonResource
     public function toArray(Request $request): array
     {
        return [
-            'customer_name' => ($this->customer->first_name ?? '–') . ' ' . ($this->customer->last_name ?? ''),
+            'customer_name' => implode(' ', array_filter([
+                $this->customer->first_name ?? '–',
+                $this->customer->last_name ?? ''
+            ])),
             'customer_email' => $this->customer->email ?? '–',
             'total_price' => $this->total_price ?? '–',
             'financial_status' => $this->financial_status ?? '–',
